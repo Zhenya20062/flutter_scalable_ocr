@@ -14,7 +14,9 @@ class TextRecognizerPainter extends CustomPainter {
       this.boxRightOff = 4,
       this.boxTopOff = 2,
       this.getRawData,
-      this.paintboxCustom});
+      this.paintboxCustom,
+      this.displayRecognizedText = false,
+      });
 
   /// ML kit recognizer
   final RecognizedText recognizedText;
@@ -51,6 +53,9 @@ class TextRecognizerPainter extends CustomPainter {
 
   /// Narower box paint
   final Paint? paintboxCustom;
+
+  /// Whether to draw Paragraph in the canvas
+  final bool displayRecognizedText;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -121,6 +126,8 @@ class TextRecognizerPainter extends CustomPainter {
             var parsedText = textBlock.text;
             scannedText += " ${textBlock.text}";
 
+            if (!displayRecognizedText) continue;
+
             final ParagraphBuilder builder = ParagraphBuilder(
               ParagraphStyle(
                   textAlign: TextAlign.left,
@@ -132,13 +139,13 @@ class TextRecognizerPainter extends CustomPainter {
             builder.addText(parsedText);
             builder.pop();
 
-            canvas.drawParagraph(
-              builder.build()
-                ..layout(ParagraphConstraints(
-                  width: right - left,
-                )),
-              Offset(left, top),
-            );
+              canvas.drawParagraph(
+                builder.build()
+                  ..layout(ParagraphConstraints(
+                    width: right - left,
+                  )),
+                Offset(left, top),
+              );
           }
         }
       }
