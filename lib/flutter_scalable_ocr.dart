@@ -129,7 +129,7 @@ class ScalableOCRState extends State<ScalableOCR> {
     if (cameraController == null || !cameraController.value.isInitialized) {
       return const Text('Tap a camera');
     } else {
-      const double previewAspectRatio = 0.5;
+      const double previewAspectRatio = 1;
       return SizedBox(
         height: widget.boxHeight ?? MediaQuery.of(context).size.height / 5,
         child: Stack(
